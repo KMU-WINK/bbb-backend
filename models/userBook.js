@@ -35,5 +35,8 @@ class UserBook extends Sequelize.Model {
             foreignKey: 'bookId',
             targetKey: 'bookId',
         });
+        db.UserBook.hasMany(db.Review, {
+            foreignKey: 'userBookId'
+        })
     }
 }

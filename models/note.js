@@ -24,7 +24,7 @@ class Note extends Sequelize.Model {
     }
 
     static associate(db) {
-        db.Note.belongsTo(db.User);
+        db.Note.belongsTo(db.User, { foreignKey: 'userId', targetKey: 'id' });
     }
 }
 

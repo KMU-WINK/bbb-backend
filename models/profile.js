@@ -18,7 +18,7 @@ class Profile extends Sequelize.Model {
     static associate(db) {
         db.Profile.belongsTo(db.User, {
             foreignKey: 'userId',
-            sourceKey: 'id',
+            targetKey: 'id',
         });
     }
 }

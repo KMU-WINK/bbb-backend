@@ -27,10 +27,7 @@ class UserBook extends Sequelize.Model {
     }
 
     static associate(db) {
-        db.UserBook.belongsTo(db.User, {
-            foreignKey: 'userId',
-            targetKey: 'id',
-        });
+        db.UserBook.belongsTo(db.User);
         db.UserBook.belongsTo(db.Book, {
             foreignKey: 'bookId',
             targetKey: 'bookId',
@@ -40,3 +37,5 @@ class UserBook extends Sequelize.Model {
         })
     }
 }
+
+module.exports = UserBook;

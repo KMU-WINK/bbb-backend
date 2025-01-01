@@ -9,7 +9,7 @@ const path = require('path');
 
 dotenv.config();
 
-const pageRouter = require('./routes/page');
+// const pageRouter = require('./routes/page');
 const { sequelize } = require('./models/index');
 
 const app = express();
@@ -30,7 +30,7 @@ sequelize.sync( { force: true } ) // 배포 시 false로 바꾸기
     });
 
 app.use(morgan('dev'));
-app.use(express.static(path(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
 app.use(express.urlencoded( { extended: false } ));
 app.use(cookieParser(process.env.COOKIE_SECRET));
@@ -44,7 +44,7 @@ app.use(session({
     },
 }));
 
-app.use('/', pageRouter);
+// app.use('/', pageRouter);
 
 app.use((req, res, next) => {
     const error = new Error(`${req.method} ${req.url} 라우터가 없습니다.`);

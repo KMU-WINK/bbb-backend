@@ -25,17 +25,16 @@ class Review extends Sequelize.Model {
 
     static associate(db) {
         db.Review.belongsTo(db.User, {
-            foreignKey: 'userId', // 작성자
             onDelete: 'CASCADE',
             onUpdate: 'CASCADE',
         });
         db.Review.belongsTo(db.UserBook, {
             foreignKey: 'userBookId',
-            onDelete: 'CASCADE',
-            onUpdate: 'CASCADE',
         });
         db.Review.belongsToMany(db.User, {
             through: 'Like',
+            foreignKey: 'reviewId',
+            otherKey: 'userId',
         });
     }
 };

@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 
 class Book extends Sequelize.Model {
-    static init(sequelize) {
+    static initiate(sequelize) {
         Book.init({
             bookId: {  // 오픈 API에서 제공되는 bookId
                 type: Sequelize.INTEGER,
@@ -35,3 +35,5 @@ class Book extends Sequelize.Model {
         });
     }
 }
+
+module.exports = Book;

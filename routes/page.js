@@ -1,13 +1,16 @@
 const express = require('express');
 const router = express.Router();
-const { renderMain, renderUser, renderBooks, renderBookshelf, renderNotes, renderReview, renderProfile } = require('../controllers/page');
+const { renderMain, renderLogin, renderJoin, renderProfile } = require('../controllers/page');
+const { isLoggedIn, isNotLoggedIn } = require('../middlewares');
+
+router.use((req, res, next) => {
+    res.locals.user = req.user;
+    next();
+})
 
 router.get('/', renderMain);
-router.get('/user', renderUser);
-router.get('/books', renderBooks);
-router.get('/bookshelf', renderBookshelf);
-router.get('/notes', renderNotes);
-router.get('/reviews', renderReview);
-router.get('/profile', renderProfile);
+router.get('/login', isNotLoggedIn, renderLogin);
+router.get('/join', isNotLoggedIn, renderJoin);
+router.get('/profile', isLoggedIn, renderProfile);
 
 module.exports = router;

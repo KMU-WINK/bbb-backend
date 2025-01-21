@@ -1,8 +1,8 @@
 {
   "development": {
     "username": "root",
-    "password": "kjb13445!",
-    "database": "winkprojectbookbookbook",
+    "password": null,
+    "database": "winkproject",
     "host": "127.0.0.1",
     "dialect": "mysql"
   },

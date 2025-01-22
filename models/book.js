@@ -3,28 +3,51 @@ const Sequelize = require('sequelize');
 class Book extends Sequelize.Model {
     static initiate(sequelize) {
         Book.init({
-            bookId: {  // 오픈 API에서 제공되는 bookId
+            bookId: {
                 type: Sequelize.INTEGER,
-                allowNull: false,
+                autoIncrement: true,
                 primaryKey: true,
             },
             title: {
-                type: Sequelize.STRING(255),
+                type: Sequelize.STRING,
                 allowNull: false,
             },
-            author: {
-                type: Sequelize.STRING(255),
+            authors: {
+                type: Sequelize.JSON,
+                allowNull: false,
+            },
+            publisher: {
+                type: Sequelize.STRING,
                 allowNull: true,
             },
-            // 추가적인 책 정보
+            isbn: {
+                type: Sequelize.STRING,
+                unique: true,
+                allowNull: true,
+            },
+            thumbnail: {
+                type: Sequelize.STRING,
+                allowNull: true,
+            },
+            contents: {
+                type: Sequelize.TEXT,
+                allowNull: true,
+            },
+            price: {
+                type: Sequelize.INTEGER,
+                allowNull: true,
+            },
+            datetime: {
+                type: Sequelize.DATE,
+                allowNull: true,
+            },
         }, {
             sequelize,
             timestamps: true,
-            paranoid: true,
             modelName: 'Book',
             tableName: 'books',
-            charset: 'utf8',
-            collate: 'utf8_general_ci',
+            charset: 'utf8mb4',
+            collate: 'utf8mb4_general_ci',
         });
     }
 

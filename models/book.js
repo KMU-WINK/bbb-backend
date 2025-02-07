@@ -52,9 +52,10 @@ class Book extends Sequelize.Model {
     }
 
     static associate(db) {
-        db.Book.hasMany(db.UserBook, {
-            foreignKey: 'bookId', // 'UserBook' 테이블에서 'bookId' 외래키 사용
-            sourceKey: 'bookId',  // 'Book' 모델에서 참조할 기본 키
+        db.Book.belongsToMany(db.User, {
+            through: 'userBook',
+            foreignKey: 'bookId',
+            otherKey: 'userId',
         });
     }
 }

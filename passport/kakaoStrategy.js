@@ -10,9 +10,12 @@ module.exports = () => {
         console.log('kakao profile', profile);
         try {
             const exUser = await User.findOne({
-                where: { snsId: profile.id, provider: 'kakao' },
+                where: { email, provider: 'kakao' },
             });
             if (exUser) {
+                if (exUser.provider !== 'kakao') {
+                    throw new Error('해당 이메일로 이미 다른 방식으로 가입된 계정이 있습니다.')
+                }
                 done(null, exUser);
             } else {
                 const newUser = await User.create({

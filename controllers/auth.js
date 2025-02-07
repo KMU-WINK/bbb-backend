@@ -3,7 +3,7 @@ const User = require('../models/user');
 const passport = require('passport');
 
 exports.join = async (req, res, next) => {
-    const { nick, email, password } = req.body;
+    const { email, password } = req.body;
     try {
         const exUser = await User.findOne({ where: { email } });
         if (exUser) {
@@ -12,7 +12,6 @@ exports.join = async (req, res, next) => {
         const hash = await bcrypt.hash(password, 12); // 암호화
         await User.create({
             email,
-            nick,
             password: hash,
         });
         return res.status(201).json({ message: '회원가입이 완료되었습니다.' });
@@ -40,7 +39,6 @@ exports.login = () => {
                 message: '로그인되었습니다.',
                 user: {
                     email: user.email,
-                    nick: user.nick,
                 }
             });
         })

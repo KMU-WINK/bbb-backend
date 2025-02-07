@@ -8,8 +8,8 @@ const { join, login, logout } = require('../controllers/auth');
 router.post('/join', isNotLoggedIn, join);
 // POST /auth/login
 router.post('/login', isNotLoggedIn, login);
-// GET /auth/logout
-router.get('/logout', isLoggedIn, logout);
+// POST /auth/logout
+router.post('/logout', isLoggedIn, logout);
 // GET /auth/kakao
 router.get('/kakao', passport.authenticate('kakao'));
 // GET /auth/kakao/callback

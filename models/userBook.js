@@ -4,9 +4,9 @@ class UserBook extends Sequelize.Model {
     static initiate(sequelize) {
         UserBook.init({
             status: {
-                type: Sequelize.CHAR(1),
+                type: Sequelize.ENUM('to-read', 'reading', 'read'),
                 allowNull: false,
-                defaultValue: 0, // 0 -> to-read, 1 -> reading, 2 -> read
+                defaultValue: 'to-read',
             },
         }, {
             sequelize,
@@ -20,20 +20,9 @@ class UserBook extends Sequelize.Model {
             indexes: [
                 {
                     unique: true,
-                    fields: ['userId', 'bookId'], // userId와 bookId의 조합이 유니크
+                    fields: ['userId', 'bookId'], // userId와 bookId의 조합 유니크
                 },
             ],
-        })
-    }
-
-    static associate(db) {
-        db.UserBook.belongsTo(db.User);
-        db.UserBook.belongsTo(db.Book, {
-            foreignKey: 'bookId',
-            targetKey: 'bookId',
-        });
-        db.UserBook.hasMany(db.Review, {
-            foreignKey: 'userBookId'
         })
     }
 }

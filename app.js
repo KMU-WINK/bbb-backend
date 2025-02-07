@@ -12,6 +12,7 @@ dotenv.config();
 
 const pageRouter = require('./routes/page');
 const authRouter = require('./routes/auth');
+const bookRouter = require('./routes/books');
 const { sequelize } = require('./models/index');
 const passportConfig = require('./passport');
 
@@ -53,7 +54,7 @@ app.use(passport.session()); // 브라우저에 connect.sid 세션 쿠키 전송
 
 app.use('/', pageRouter);
 app.use('/auth', authRouter);
-// app.use('/books', bookRouter);
+app.use('/books', bookRouter);
 // app.use('/bookshelf', bookshelfRouter);
 // app.use('/notes', noteRouter);
 // app.use('/reviews', reviewRouter);

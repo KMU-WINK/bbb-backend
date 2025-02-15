@@ -3,10 +3,33 @@ const Sequelize = require('sequelize');
 class UserBook extends Sequelize.Model {
     static initiate(sequelize) {
         UserBook.init({
+            id: {
+                type: Sequelize.INTEGER,
+                autoIncrement: true,
+                primaryKey: true,
+            },
             status: {
                 type: Sequelize.ENUM('to-read', 'reading', 'read'),
                 allowNull: false,
                 defaultValue: 'to-read',
+            },
+            userId: {
+                type: Sequelize.INTEGER,
+                allowNull: false,
+                references: {
+                    model: 'users',
+                    key: 'userId',
+                },
+                onDelete: 'CASCADE',
+            },
+            bookId: {
+                type: Sequelize.INTEGER,
+                allowNull: false,
+                references: {
+                    model: 'books',
+                    key: 'bookId',
+                },
+                onDelete: 'CASCADE',
             },
         }, {
             sequelize,

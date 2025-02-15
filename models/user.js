@@ -3,6 +3,11 @@ const Sequelize = require('sequelize');
 class User extends Sequelize.Model {
     static initiate(sequelize) {
         User.init({
+            userId: {
+                type: Sequelize.INTEGER,
+                autoIncrement: true,
+                primaryKey: true,
+            },
             email: {
                 type: Sequelize.STRING(40),
                 allowNull: true,
@@ -34,19 +39,12 @@ class User extends Sequelize.Model {
     }
 
     static associate(db) {
-        db.User.hasOne(db.Profile);
         db.User.belongsToMany(db.Book, {
-            through: 'userBook',
+            through: 'UserBook',
             foreignKey: 'userId',
             otherKey: 'bookId',
         });
         db.User.hasMany(db.Note);
-        db.User.hasMany(db.Review);
-        db.User.belongsToMany(db.Review, { 
-            through: 'Like',
-            foreignKey: 'userId',
-            otherKey: 'reviewId',
-        });
     }
 }
 

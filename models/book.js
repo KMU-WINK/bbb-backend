@@ -29,18 +29,6 @@ class Book extends Sequelize.Model {
                 type: Sequelize.STRING,
                 allowNull: true,
             },
-            contents: {
-                type: Sequelize.TEXT,
-                allowNull: true,
-            },
-            price: {
-                type: Sequelize.INTEGER,
-                allowNull: true,
-            },
-            datetime: {
-                type: Sequelize.DATE,
-                allowNull: true,
-            },
         }, {
             sequelize,
             timestamps: true,
@@ -53,7 +41,7 @@ class Book extends Sequelize.Model {
 
     static associate(db) {
         db.Book.belongsToMany(db.User, {
-            through: 'userBook',
+            through: 'UserBook',
             foreignKey: 'bookId',
             otherKey: 'userId',
         });

@@ -16,10 +16,10 @@ module.exports = () => {
                 if (result) {
                     done(null, exUser);
                 } else {
-                    done(null, false, { message: '이메일이 존재하지 않거나 비밀번호가 일치하지 않습니다.' });
+                    done(null, false, { message: '비밀번호가 일치하지 않습니다.' });
                 }
             } else {
-                done(null, false, { message: '이메일이 존재하지 않거나 비밀번호가 일치하지 않습니다.' });
+                done(null, false, { message: '존재하지 않은 이메일입니다.' });
             }
         } catch (error) {
             console.error(error);

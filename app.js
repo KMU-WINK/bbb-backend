@@ -10,9 +10,10 @@ const path = require('path');
 
 dotenv.config();
 
-const pageRouter = require('./routes/page');
 const authRouter = require('./routes/auth');
 const bookRouter = require('./routes/books');
+const wishlistRouter = require('./routes/wishlist');
+const registerlistRouter = require('./routes/registerlist');
 const { sequelize } = require('./models/index');
 const passportConfig = require('./passport');
 
@@ -26,7 +27,7 @@ nunjucks.configure('views', {
     watch: true,
 });
 
-sequelize.sync( { force: true } ) // 배포 시 false로 바꾸기
+sequelize.sync( { force: false } ) // 배포 시 false로 바꾸기
     .then(() => {
         console.log('데이터베이스 연결 성공');
     })
@@ -52,9 +53,10 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session()); // 브라우저에 connect.sid 세션 쿠키 전송
 
-app.use('/', pageRouter);
 app.use('/auth', authRouter);
 app.use('/books', bookRouter);
+app.use('/wishlist', wishlistRouter);
+app.use('/registerlist', registerlistRouter);
 // app.use('/bookshelf', bookshelfRouter);
 // app.use('/notes', noteRouter);
 // app.use('/reviews', reviewRouter);

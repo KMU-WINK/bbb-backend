@@ -7,7 +7,7 @@ const kakaoApi = axios.create({
     },
 });
 
-const searchBooks = async (query, options = {}) => {
+exports.kakaoSearch = async (query, options = {}) => {
     try {
         const { data } = await kakaoApi.get('', {
             params: { query, ...options },
@@ -17,24 +17,4 @@ const searchBooks = async (query, options = {}) => {
         console.error('Kakao API Error:', error.message);
         throw error;
     }
-};
-
-const searchABook = async (query, target) => {
-    try {
-        const { data } = await kakaoApi.get('', {
-            params: {
-                query: query,
-                target: target,
-            },
-        });
-        return data;
-    } catch (error) {
-        console.error('Kakao API Error:', error.message);
-        throw error;
-    }
-}
-
-module.exports = {
-    searchBooks,
-    searchABook,
 };

@@ -14,6 +14,7 @@ const authRouter = require('./routes/auth');
 const bookRouter = require('./routes/books');
 const wishlistRouter = require('./routes/wishlist');
 const registerlistRouter = require('./routes/registerlist');
+const finishlistRouter = require('./routes/finishlist');
 const { sequelize } = require('./models/index');
 const passportConfig = require('./passport');
 
@@ -27,7 +28,7 @@ nunjucks.configure('views', {
     watch: true,
 });
 
-sequelize.sync( { force: false } ) // 배포 시 false로 바꾸기
+sequelize.sync( { force: true } ) // 개발: true, 배포: false
     .then(() => {
         console.log('데이터베이스 연결 성공');
     })
@@ -57,9 +58,8 @@ app.use('/auth', authRouter);
 app.use('/books', bookRouter);
 app.use('/wishlist', wishlistRouter);
 app.use('/registerlist', registerlistRouter);
-// app.use('/bookshelf', bookshelfRouter);
+app.use('/finishlist', finishlistRouter);
 // app.use('/notes', noteRouter);
-// app.use('/reviews', reviewRouter);
 
 app.use((req, res, next) => {
     const error = new Error(`${req.method} ${req.url} 라우터가 없습니다.`);

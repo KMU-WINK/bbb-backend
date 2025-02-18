@@ -70,3 +70,28 @@ exports.showWishlist = async (req, res) => {
         });
     };
 };
+
+exports.deleteWishlist = async (req, res) => {
+    try {
+        const userId = req.user.userId;
+        const {bookId} = req.body;
+        const result = await UserBook.destroy({ where: { userId, bookId, status: 'to-read' } });
+        if (result === 0) {
+            return res.json({
+                message: '등록되지 않은 책입니다.',
+                success: false,
+            });
+        };
+        return res.json({
+            message: '책이 성공적으로 삭제되었습니다.',
+            success: true,
+            data: { deletedBookId : bookId },
+        });
+    } catch (error) {
+        console.error(error);
+        return res.json({
+            message: '읽을 책을 삭제하는 과정에서 오류가 발생했습니다.',
+            success: false,
+        });
+    };
+};

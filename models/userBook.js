@@ -17,19 +17,21 @@ class UserBook extends Sequelize.Model {
                 type: Sequelize.INTEGER,
                 allowNull: false,
                 references: {
-                    model: 'users',
-                    key: 'userId',
+                    model: 'Users',
+                    key: 'id',
                 },
                 onDelete: 'CASCADE',
+                onUpdate: 'CASCADE',
             },
             bookId: {
                 type: Sequelize.INTEGER,
                 allowNull: false,
                 references: {
-                    model: 'books',
-                    key: 'bookId',
+                    model: 'Books',
+                    key: 'id',
                 },
                 onDelete: 'CASCADE',
+                onUpdate: 'CASCADE',
             },
         }, {
             sequelize,

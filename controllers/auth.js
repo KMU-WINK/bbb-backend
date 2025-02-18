@@ -68,7 +68,11 @@ exports.login = (req, res, next) => {
             return res.status(200).json({ 
                 message: '로그인되었습니다.',
                 success: true,
-                data: user,
+                data: {
+                    id: user.id,
+                    email: user.email,
+                    provider: user.provider,
+                },
             });
         })
     })(req, res, next);

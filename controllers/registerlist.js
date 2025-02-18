@@ -3,7 +3,7 @@ const UserBook = require('../models/userBook');
 
 exports.addToRegisterlist = async (req, res) => {
     try {
-        const userId = req.user.userId;
+        const userId = req.user.id;
         const { title, authors, publisher, isbn, thumbnail } = req.body;
         const [book] = await Book.findOrCreate({ 
             where: { isbn },
@@ -16,7 +16,7 @@ exports.addToRegisterlist = async (req, res) => {
             },
         });
         const [userBook, created] = await UserBook.findOrCreate({
-            where: { userId, bookId: book.bookId },
+            where: { userId, bookId: book.id },
             defaults: { status: 'reading' },
         });
         if (!created) {
@@ -49,13 +49,13 @@ exports.addToRegisterlist = async (req, res) => {
 
 exports.showRegisterlist = async (req, res) => {
     try {
-        const userId = req.user.userId;
+        const userId = req.user.id;
         const readingBookId = await UserBook.findAll({ 
             where: { userId, status: 'reading' },
             attributes: ['bookId'],
         });
         const readingBooks = await Book.findAll({
-            where: { bookId: readingBookId.map(item => item.bookId) },
+            where: { id: readingBookId.map(item => item.bookId) },
         })
         return res.json({
             message: '읽는 중인 책을 불러옵니다.',
@@ -73,7 +73,7 @@ exports.showRegisterlist = async (req, res) => {
 
 exports.deleteRegisterlist = async (req, res) => {
     try {
-        const userId = req.user.userId;
+        const userId = req.user.id;
         const {bookId} = req.body;
         const result = await UserBook.destroy({ where: { userId, bookId, status: 'reading' } });
         if (result === 0) {

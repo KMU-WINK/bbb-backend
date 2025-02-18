@@ -3,7 +3,7 @@ const Sequelize = require('sequelize');
 class Book extends Sequelize.Model {
     static initiate(sequelize) {
         Book.init({
-            bookId: {
+            id: {
                 type: Sequelize.INTEGER,
                 autoIncrement: true,
                 primaryKey: true,
@@ -45,6 +45,7 @@ class Book extends Sequelize.Model {
             foreignKey: 'bookId',
             otherKey: 'userId',
         });
+        db.Book.hasMany(db.Note);
     }
 }
 

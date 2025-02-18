@@ -3,7 +3,7 @@ const UserBook = require('../models/userBook');
 
 exports.addToWishlist = async (req, res) => {
     try {
-        const userId = req.user.userId;
+        const userId = req.user.id;
         const { title, authors, publisher, isbn, thumbnail } = req.body;
         const [book] = await Book.findOrCreate({ 
             where: { isbn },
@@ -16,7 +16,7 @@ exports.addToWishlist = async (req, res) => {
             },
         });
         const [userBook, created] = await UserBook.findOrCreate({
-            where: { userId, bookId: book.bookId },
+            where: { userId, bookId: book.id },
             defaults: { status: 'to-read' },
         });
         if (!created) {
@@ -49,13 +49,13 @@ exports.addToWishlist = async (req, res) => {
 
 exports.showWishlist = async (req, res) => {
     try {
-        const userId = req.user.userId;
+        const userId = req.user.id;
         const toReadBookId = await UserBook.findAll({ 
             where: { userId, status: 'to-read' },
             attributes: ['bookId'],
         });
         const toReadBook = await Book.findAll({
-            where: { bookId: toReadBookId.map(item => item.bookId) },
+            where: { id: toReadBookId.map(item => item.bookId) },
         });
         return res.json({
             message: '읽을 책을 불러옵니다.',
@@ -73,7 +73,7 @@ exports.showWishlist = async (req, res) => {
 
 exports.deleteWishlist = async (req, res) => {
     try {
-        const userId = req.user.userId;
+        const userId = req.user.id;
         const {bookId} = req.body;
         const result = await UserBook.destroy({ where: { userId, bookId, status: 'to-read' } });
         if (result === 0) {

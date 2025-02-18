@@ -3,7 +3,7 @@ const Sequelize = require('sequelize');
 class User extends Sequelize.Model {
     static initiate(sequelize) {
         User.init({
-            userId: {
+            id: {
                 type: Sequelize.INTEGER,
                 autoIncrement: true,
                 primaryKey: true,

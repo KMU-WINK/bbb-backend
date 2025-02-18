@@ -3,7 +3,7 @@ const UserBook = require('../models/userBook');
 
 exports.addToFinishlist = async (req, res) => {
     try {
-        const userId = req.user.userId;
+        const userId = req.user.id;
         const {bookId} = req.body;
         const [result] = await UserBook.update( { status: 'read' }, { where: { userId, bookId } });
         if (result === 0) {
@@ -28,13 +28,13 @@ exports.addToFinishlist = async (req, res) => {
 
 exports.showFinishlist = async (req, res) => {
     try {
-        const userId = req.user.userId;
+        const userId = req.user.id;
         const readBookId = await UserBook.findAll({
             where: { userId, status: 'read' },
             attributes: ['bookId'],
         });
         const readBook = await Book.findAll({
-            where: { bookId : readBookId.map(itme => itme.bookId )},
+            where: { id : readBookId.map(itme => itme.bookId )},
         });
         return res.json({
             message: '읽은 책을 불러옵니다.',
@@ -52,7 +52,7 @@ exports.showFinishlist = async (req, res) => {
 
 exports.deleteFinishlist = async (req, res) => {
     try {
-        const userId = req.user.userId;
+        const userId = req.user.id;
         const {bookId} = req.body;
         const result = await UserBook.destroy({ where: { userId, bookId, status: 'read' } });
         if (result === 0) {

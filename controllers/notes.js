@@ -46,7 +46,6 @@ exports.postNote = async (req, res) => {
         return res.json({
             message: '메모를 게시했습니다.',
             success: true,
-            data: note,
         });
     } catch (error) {
         console.error(error);
@@ -59,8 +58,8 @@ exports.postNote = async (req, res) => {
 
 exports.patchNote = async (req, res) => {
     try {
-        const { noteId, title, content } = req.body;
-        const [note] = await Note.update({ title, content }, { where: { id: noteId }});
+        const { bookId, title, content } = req.body;
+        const [note] = await Note.update({ title, content }, { where: { BookId: bookId }});
         if (note === 0) {
             return res.json({
                 message: '원본을 찾을 수 없어 메모를 수정할 수 없습니다..',
@@ -70,7 +69,6 @@ exports.patchNote = async (req, res) => {
         return res.json({
             message: '메모를 수정했습니다.',
             success: true,
-            data: note,
         });
     } catch (error) {
         console.error(error);
@@ -83,8 +81,8 @@ exports.patchNote = async (req, res) => {
 
 exports.deleteNote = async (req, res) => {
     try {
-        const {noteId} = req.body;
-        const deleted = await Note.destroy({ where: { id: noteId }});
+        const { bookId } = req.body;
+        const deleted = await Note.destroy({ where: { BookId: bookId }});
         if (deleted === 0) {
             return res.json({
                 message: '원본을 찾을 수 없어 메모를 삭제할 수 없습니다.',
@@ -94,7 +92,6 @@ exports.deleteNote = async (req, res) => {
         return res.json({
             message: '메모를 삭제했습니다.',
             success: true,
-            data: { deletedNoteId: noteId },
         });
     } catch (error) {
         console.error(error);

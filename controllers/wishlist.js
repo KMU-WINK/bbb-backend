@@ -30,13 +30,11 @@ exports.addToWishlist = async (req, res) => {
             return res.json({
                 message: '찜 목록으로 이동했습니다.',
                 success: true,
-                data: userBook,
             });
         };
         return res.json({
             message: '찜 목록에 추가했습니다.',
             success: true,
-            date: userBook,
         });
     } catch (error) {
         console.error(error);
@@ -85,7 +83,6 @@ exports.deleteWishlist = async (req, res) => {
         return res.json({
             message: '책이 성공적으로 삭제되었습니다.',
             success: true,
-            data: { deletedBookId : bookId },
         });
     } catch (error) {
         console.error(error);

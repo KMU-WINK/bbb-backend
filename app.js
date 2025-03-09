@@ -7,6 +7,7 @@ const dotenv = require('dotenv');
 const passport = require('passport');
 const nunjucks = require('nunjucks');
 const path = require('path');
+const cors = require('cors');
 
 dotenv.config();
 
@@ -29,13 +30,17 @@ nunjucks.configure('views', {
     watch: true,
 });
 
-sequelize.sync( { force: true } ) // 개발: true, 배포: false
+sequelize.sync( { force: false } ) // 개발: true, 배포: false
     .then(() => {
         console.log('데이터베이스 연결 성공');
     })
     .catch((err) => {
         console.error(err);
     });
+
+app.use(cors({
+    origin: '*', // 모든 출처 허용 옵션. true 를 써도 된다.
+}));
 
 app.use(morgan('dev'));
 app.use(express.static(path.join(__dirname, 'public')));
@@ -54,6 +59,9 @@ app.use(session({
 
 app.use(passport.initialize());
 app.use(passport.session()); // 브라우저에 connect.sid 세션 쿠키 전송
+
+const { swaggerUi, specs } = require("./swagger/swagger");
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
 
 app.use('/auth', authRouter);
 app.use('/books', bookRouter);

@@ -15,7 +15,6 @@ exports.addToFinishlist = async (req, res) => {
         return res.json({
             message: '책을 다 읽었습니다.',
             success: true,
-            data: { ReadBookId: bookId },
         });
     } catch (error) {
         console.error(error);
@@ -64,7 +63,6 @@ exports.deleteFinishlist = async (req, res) => {
         return res.json({
             message: '책이 정상적으로 삭제되었습니다.',
             success: true,
-            data: { deletedBookId: bookId },
         });
     } catch (error) {
         console.error(error);

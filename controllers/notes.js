@@ -4,10 +4,17 @@ const Note = require('../models/note');
 exports.getNote = async (req, res) => {
     try {
         const userId = req.user.id;
-        const notes = await Note.findAll({
-            where: { UserId: userId },
-            attributes: [ 'BookId', 'title', 'content' ],
+        const { bookId } = req.query;
+        const notes = await Note.findOne({
+            where: { BookId: bookId, UserId: userId },
+            attributes: [ 'BookId', 'title', 'content', 'updatedAt' ],
         });
+        if (!notes) {
+            return res.json({
+                message: '해당 책에 대한 메모가 없습니다.',
+                success: false,
+            });
+        };
         return res.json({
             message: '메모를 불러옵니다.',
             success: true,
